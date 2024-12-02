@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum BaseRole {
+  ADMIN
+  MODERATOR
+  USER
+}
+
+model User {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  fullName     String
+  phoneNumber  String         @unique()
+  createdDate  DateTime       @default(now())
+  password     String
+  role         BaseRole[]     @default([USER])
+  Posts        Posts[]
+  PostComments PostComments[]
+}
+
+model Posts {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  content      String
+  createdDate  DateTime       @default(now())
+  author       User           @relation(fields: [authorId], references: [id])
+  authorId     String
+  isPublished  Boolean        @default(false)
+  PostComments PostComments[]
+}
+
+model PostComments {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  postId      String
+  userId      String
+  post        Posts    @relation(fields: [postId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+  content     String
+  createdDate DateTime @default(now())
+}
