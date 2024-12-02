@@ -3,13 +3,14 @@ import { AppModule } from './app.module';
 import {ValidationPipe} from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import {AllExceptionsFilter} from "../exception";
+import * as process from "node:process";
 
 async function bootstrap() {
 
   // create next app
   const app = await NestFactory.create(AppModule);
 
-
+  console.log(process.env.NODE_ENV)
   // setting up the swagger for api and CRUD operations
   const config = new DocumentBuilder()
       .setTitle('RBAC + ABAC by Vedant Bhavsar')
@@ -20,7 +21,7 @@ async function bootstrap() {
       .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('', app, document);
+  SwaggerModule.setup('swagger', app, document);
   app.enableCors();
 
 
