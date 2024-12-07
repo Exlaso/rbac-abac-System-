@@ -8,13 +8,17 @@ export class AppController {
         return `
         <html >
         <head>
-        <title>RBAC + ABAC SYSTEM BY EXLASO</title>
+        <title>RBAC + ABAC SYSTEM BY Exlaso</title>
 </head>
         
         <body style="display: flex; justify-content: center; align-items: center; flex-direction: column">
         <h1>
-        NestJS is running!
+        RBAC + ABAC SYSTEM is running
 </h1>
+<span>
+<a href="http://exlaso.in" style="text-decoration: none">Developed by Vedant Bhavsar</a>
+</span>
+
 <p >
 <span style="color: red">NOTE* </span> Swagger GUI may not be working on production 
 </p>
